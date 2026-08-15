@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "../ShadersC/Shader.h"
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
@@ -12,7 +14,7 @@ void processInput(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 }
-
+/*
 const char* vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
 "layout (location = 1) in vec3 aColor;\n"
@@ -33,6 +35,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "{\n"
 " FragColor = vec4(ourColor, 1.0);\n"
 "}\0";
+*/
 
 int main() {
 	glfwInit();
@@ -63,7 +66,7 @@ int main() {
 	std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes
 		<< std::endl;
 	*/
-
+	/*
 	//vertex shader
 	unsigned int vertexShader;
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -116,10 +119,14 @@ int main() {
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShaderOrange);
 
+	*/
+
+	Shader ourShader("vertex.txt", "fragment.txt");
+
 	float firstTriangle[] = {
-		-0.9f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,  // left 
-		-0.0f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // right
-		-0.45f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f // top 
+		 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,  // left 
+		-0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // right
+		 0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f // top 
 	};
 
 	unsigned int VAO;
@@ -137,7 +144,7 @@ int main() {
 	glEnableVertexAttribArray(1);
 
 
-	int vertexColorLocation = glGetUniformLocation(shaderProgramOrange, "ourColor");
+	//int vertexColorLocation = glGetUniformLocation(shaderProgramOrange, "ourColor");
 
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
@@ -147,8 +154,22 @@ int main() {
 
 		float timeValue = glfwGetTime();
 		float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
+		
+		ourShader.use();
+		float offset = 0.5f;
+		ourShader.setFloat("offset", offset);
+
+		/*
+		int location = glGetUniformLocation(ourShader.ID, "offset");
+		std::cout << location << std::endl;
+		*/
+
+		//ourShader.setFloat("someUniform", 1.0f);
+
+		/*
 		glUseProgram(shaderProgramOrange);
 		glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+		*/
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 		//glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
@@ -159,7 +180,7 @@ int main() {
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 	//glDeleteBuffers(1, &EBO);
-	glDeleteProgram(shaderProgramOrange);
+	//glDeleteProgram(shaderProgramOrange);
 
 	glfwTerminate();
 	return 0;
