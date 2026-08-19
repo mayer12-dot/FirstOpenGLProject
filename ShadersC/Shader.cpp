@@ -74,6 +74,10 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	glDeleteShader(fragment);
 }
 
+Shader::Shader() {
+	Shader("vertex.txt", "fragment.txt");
+}
+
 void Shader::use()
 {
 	glUseProgram(ID);

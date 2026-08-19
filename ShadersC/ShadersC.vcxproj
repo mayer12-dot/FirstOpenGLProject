@@ -134,8 +134,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\FirstOpenGLProject\glad.c" />
-    <ClCompile Include="..\FirstOpenGLProject\shaders.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="shaders.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h" />
