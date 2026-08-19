@@ -44,5 +44,8 @@
     <Image Include="wood.jpeg">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="happy_face.PNG">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -147,6 +147,7 @@
     <Text Include="vertex.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="happy_face.PNG" />
     <Image Include="wood.jpeg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
