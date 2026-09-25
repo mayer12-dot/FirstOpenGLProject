@@ -6,6 +6,10 @@
 #include "../TexturesC/Shader.h"
 #include "../TexturesC/stb_image.h"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 float opacity = 0.5;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
@@ -53,6 +57,8 @@ int main() {
 	}
 
 	Shader ourShader("vertex.txt", "fragment.txt");
+
+	
 
 	float vertices[] = {
 		 0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 2.0f, // top right
@@ -169,7 +175,14 @@ int main() {
 		glBindTexture(GL_TEXTURE_2D, texture2);
 
 
+		glm::mat4 transform = glm::mat4(1.0f);
+		transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+		transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+		transform = glm::scale(transform, glm::vec3(glm::sin((double)glfwGetTime()), glm::sin((double)glfwGetTime()), 0.5f));
+		
 		ourShader.use();
+		unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 		ourShader.setInt("ourTexture", 0);
 		ourShader.setFloat("opacity", opacity);
 
