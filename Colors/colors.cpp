@@ -169,6 +169,8 @@ int main() {
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
+	
+
 	while (!glfwWindowShouldClose(window)) {
 		float currentTime = glfwGetTime();
 		deltaTime = currentTime - lastFrame;
@@ -181,15 +183,39 @@ int main() {
 		
 		//exercise1
 		
+		/*
 		lightPos.x = 2.33f * sin(glfwGetTime());
 		lightPos.z = 2.33f * cos(glfwGetTime());
+		*/
 		
 
+		glm::vec3 lightColor;
+		/*
+		lightColor.x = sin(glfwGetTime() * 2.0f);
+		lightColor.y = sin(glfwGetTime() * 0.7f);
+		lightColor.z = sin(glfwGetTime() * 1.3f);
+		*/
+
+		lightColor.x = 0.7f;
+		lightColor.y = 0.0f;
+		lightColor.z = 0.0f;
+
+
+		glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
+		glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
+
 		lightingShader.use();
-		lightingShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
-		lightingShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
-		lightingShader.setVec3("lightPos", lightPos);
 		lightingShader.setVec3("viewPos", camera.Position);
+
+		lightingShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+		lightingShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
+		lightingShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+		lightingShader.setFloat("material.shininess", 32.0f);
+
+		lightingShader.setVec3("light.ambient", ambientColor);
+		lightingShader.setVec3("light.diffuse", diffuseColor);
+		lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+		lightingShader.setVec3("light.position", lightPos);
 
 		glm::mat4 view = camera.getViewMatrix();
 		lightingShader.setMat4("view", view);
