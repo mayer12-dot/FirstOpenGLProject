@@ -41,6 +41,9 @@
     <Image Include="container2_specular.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="container2_specular_colored.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\TexturesC\stb_image.h">

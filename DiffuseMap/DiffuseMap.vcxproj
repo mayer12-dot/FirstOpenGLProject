@@ -151,6 +151,7 @@
   <ItemGroup>
     <Image Include="container2.png" />
     <Image Include="container2_specular.png" />
+    <Image Include="container2_specular_colored.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\TexturesC\stb_image.h" />
